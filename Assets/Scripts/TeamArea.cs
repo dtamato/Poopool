@@ -26,6 +26,7 @@ public class TeamArea : MonoBehaviour {
 
             if(fillBar.fillAmount == 1)
             {
+                // TODO: End Game
                 Debug.Log("Game ended!");
             }
         }
