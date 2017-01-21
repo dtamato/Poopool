@@ -35,7 +35,7 @@ void Awake() {
 	cc = GetComponent<CharacterController>();
 }
 
-void Update () {
+void FixedUpdate () {
 	GetInput();
 	ProcessInput();
 }
@@ -46,12 +46,11 @@ private void GetInput() {
 
 	moveVector.x = player.GetAxis("MoveHorizontal"); // get input by name or action id
 	moveVector.y = player.GetAxis("MoveVertical");
-	fire = player.GetButtonDown ("Splash");
 		rotVector.x = player.GetAxis ("TurnRight");
 		rotVector.y = player.GetAxis ("TurnLeft");
 
 
-
+		fire = player.GetButton("Splash");
 
 
 
@@ -68,9 +67,13 @@ private void ProcessInput() {
 	// Process fire
 	if(fire) {
 			Debug.Log ("SPLISH SPLASH");
+			if(player.GetButtonTimePressed("Splash") > 2)
+			{
+				Debug.Log ("BIG SPLASH");
 		//GameObject bullet = (GameObject)Instantiate(bulletPrefab, transform.position + transform.right, transform.rotation);
 		//bullet.rigidbody.AddForce(transform.right * bulletSpeed, ForceMode.VelocityChange);
 	}
+		}
 
 		if (rotVector.x != 0.0f || rotVector.y != 0.0f) {
 			normTarget = (rotVector - this.transform.position).normalized;
