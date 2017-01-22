@@ -28,6 +28,12 @@ public class Movement : MonoBehaviour{
     private Rigidbody2D rb2d;
     private Vector3 moveVector;
     private bool fire;
+	private bool boost;
+
+	public float thrust;
+	public bool isBoost;
+
+
 
     void Awake() {
 	    // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
@@ -57,10 +63,17 @@ public class Movement : MonoBehaviour{
 		rotVector.y = player.GetAxis ("TurnLeft");
         
 		fire = player.GetButton("Splash");
+		boost = player.GetButton ("Boost");
+
+
     }
 
     private void ProcessInput() {
 	    // Process movement
+		if (isBoost) {
+			rb2d.MovePosition (this.transform.localPosition + moveVector *(moveSpeed *2)  * Time.deltaTime);
+
+		}else{
 	    if(moveVector.x != 0.0f || moveVector.y != 0.0f) {
             //cc.Move(moveVector * moveSpeed * Time.deltaTime);
             rb2d.MovePosition(this.transform.position + moveVector * moveSpeed * Time.deltaTime);
@@ -76,6 +89,7 @@ public class Movement : MonoBehaviour{
 			this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rot, Time.time);
 		}
     }
+	}
 
     void HandleSplashInput ()
     {
@@ -106,5 +120,19 @@ public class Movement : MonoBehaviour{
                 this.GetComponentInChildren<SpriteRenderer>().color = Color.white;
             }
         }
-    }
+
+		if (player.GetButton("Boost")) {
+		//	nextBoost = Time.time + boostRate;
+			isBoost = true;
+	
+			if (player.GetButtonTimePressed ("Boost") > 0.5f ) {
+				isBoost = false;
+			}
+
+		} else {
+			isBoost = false;
+
+		}
+}
+
 }

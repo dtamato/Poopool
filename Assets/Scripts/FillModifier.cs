@@ -6,14 +6,23 @@ using System.Collections;
 public class FillModifier : MonoBehaviour {
 
     [SerializeField] float fillAddition = 0.0001f;
-
-    void OnCollisionEnter2D(Collision2D other)
+	[SerializeField] float pooHealth = 5;
+	void OnCollisionEnter2D(Collision2D other)
     {
         if(other.transform.CompareTag("Player"))
         {
             // TODO: Stun Player
         }
     }
+
+	void Update()
+	{
+		pooHealth -= Time.deltaTime;
+		if (pooHealth <= 0) {
+		}
+			
+			//Destroy (this.gameObject);
+	}
     
     public void ShakePoop ()
     {

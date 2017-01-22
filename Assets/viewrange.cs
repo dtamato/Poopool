@@ -18,7 +18,7 @@ public class viewrange : MonoBehaviour {
 		caughtSlippn ();
 
 }
-
+	// TO DO // TO TIRED //
 	void doYouSee()
 	{
 		Debug.DrawLine (sight[0].position, sight[1].position, Color.green);

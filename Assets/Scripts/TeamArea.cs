@@ -10,6 +10,17 @@ public class TeamArea : MonoBehaviour {
     [SerializeField] bool isTeam1;
     float fillRate = 0;
     GameManager gameManager;
+	public bool vibrate;
+
+	[SerializeField]public float angle;
+	[SerializeField]public float period = 1f;
+	private float _Time = 1;
+
+	public GameObject bar;
+	public GameObject barFill;
+
+
+	public bool isFilling = false;
 
     void Start ()
     {
@@ -28,12 +39,19 @@ public class TeamArea : MonoBehaviour {
             if (gameManager.isGameRunning) {
 
                 fillBar.fillAmount += fillRate;
+				isFilling = true;
+				Debug.Log (isFilling);
 
                 if (fillBar.fillAmount >= 1)
                 {
                     gameManager.SetWinner(isTeam1);
                 }
             }
+
+			if (fillRate <= 0)
+			{
+				isFilling = false;
+			}
         }
     }
 
@@ -41,7 +59,8 @@ public class TeamArea : MonoBehaviour {
     {
         if(other.CompareTag("FillModifier"))
         {
-            fillRate += other.GetComponent<FillModifier>().GetFillRate();
+			  fillRate += other.GetComponent<FillModifier>().GetFillRate();
+
         }
     }
 
@@ -52,4 +71,6 @@ public class TeamArea : MonoBehaviour {
             fillRate -= other.GetComponent<FillModifier>().GetFillRate();
         }
     }
+
+
 }
