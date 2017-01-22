@@ -22,6 +22,10 @@ public class TeamArea : MonoBehaviour {
 
 	public bool isFilling = false;
 
+    [SerializeField] AudioClip[] fartAudioArray;
+    [SerializeField] AudioClip rubberDuckyAudio;
+    AudioSource audioSource;
+
     void Start ()
     {
         gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
@@ -30,6 +34,9 @@ public class TeamArea : MonoBehaviour {
         {
             fillBar.fillAmount = 0;
         }
+
+        audioSource = this.GetComponentInChildren<AudioSource>();
+        audioSource.loop = false;
     }
 
     void Update ()
@@ -40,7 +47,7 @@ public class TeamArea : MonoBehaviour {
 
                 fillBar.fillAmount += fillRate;
 				isFilling = true;
-				Debug.Log (isFilling);
+				//Debug.Log (isFilling);
 
                 if (fillBar.fillAmount >= 1)
                 {
@@ -59,8 +66,18 @@ public class TeamArea : MonoBehaviour {
     {
         if(other.CompareTag("FillModifier"))
         {
-			  fillRate += other.GetComponent<FillModifier>().GetFillRate();
+			fillRate += other.GetComponent<FillModifier>().GetFillRate();
 
+            if (other.GetComponent<FillModifier>().GetFillRate() < 0)
+            {
+                audioSource.clip = rubberDuckyAudio;
+                audioSource.Play();
+            }
+            else
+            {
+                audioSource.clip = fartAudioArray[Random.Range(0, fartAudioArray.Length)];
+                audioSource.Play();
+            }
         }
     }
 

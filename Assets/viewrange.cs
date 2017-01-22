@@ -30,8 +30,8 @@ public class viewrange : MonoBehaviour {
 
 	void caughtSlippn()
 	{
-		if(Seen)
-			Debug.Log("TIME OUT!!!");
+		//if(Seen)
+		//	Debug.Log("TIME OUT!!!");
 
 	}
 }

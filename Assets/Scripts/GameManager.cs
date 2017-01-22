@@ -8,14 +8,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager> {
 
 	public bool isGameRunning = false;
-    public Text winnerText;
+    public GameObject endScreen;
 
 	protected GameManager() { }
 
 	// Update is called once per frame
 	void Update () {
 	
-        if(winnerText.transform.parent.gameObject.activeSelf && Input.anyKeyDown)
+        if(endScreen.activeSelf && Input.anyKeyDown)
         {
             SceneManager.LoadScene(0);
         }	
@@ -29,7 +29,18 @@ public class GameManager : Singleton<GameManager> {
     public void SetWinner (bool team1Lost)
     {
         isGameRunning = false;
-        winnerText.transform.parent.gameObject.SetActive(true);
-        winnerText.text = (team1Lost) ? "Team Red Wins!" : "Team Blue Wins!";
+
+        if(team1Lost)
+        {
+            endScreen.SetActive(true);
+            endScreen.transform.GetChild(0).gameObject.SetActive(true);
+            endScreen.transform.GetChild(1).gameObject.SetActive(false);
+        }
+        else
+        {
+            endScreen.SetActive(true);
+            endScreen.transform.GetChild(0).gameObject.SetActive(false);
+            endScreen.transform.GetChild(1).gameObject.SetActive(true);
+        }
     }
 }

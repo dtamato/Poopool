@@ -33,13 +33,14 @@ public class Movement : MonoBehaviour{
 	public float thrust;
 	public bool isBoost;
 
-
+    Animator animator;
 
     void Awake() {
 	    // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
 	    player = ReInput.players.GetPlayer(playerId);
 
         rb2d = this.GetComponent<Rigidbody2D>();
+        animator = this.GetComponentInChildren<Animator>();
     }
 
     void Update ()
@@ -112,6 +113,7 @@ public class Movement : MonoBehaviour{
 
             if (timePressed > smallSplashTime && timePressed < bigSplashTime)
             {
+                animator.SetTrigger("Splashing");
                 Instantiate(smallSplashPrefab, this.transform.position + this.transform.right, Quaternion.Euler(this.transform.eulerAngles.x, this.transform.eulerAngles.y, this.transform.eulerAngles.z));
             }
             else if (timePressed >= bigSplashTime)
@@ -130,9 +132,8 @@ public class Movement : MonoBehaviour{
 			}
 
 		} else {
+
 			isBoost = false;
-
 		}
-}
-
+    }
 }
