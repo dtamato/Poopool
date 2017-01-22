@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager> {
 	// Update is called once per frame
 	void Update () {
 	
-        if(winnerText.gameObject.activeSelf && Input.anyKeyDown)
+        if(winnerText.transform.parent.gameObject.activeSelf && Input.anyKeyDown)
         {
             SceneManager.LoadScene(0);
         }	
