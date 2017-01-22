@@ -15,6 +15,11 @@ public class FillModifier : MonoBehaviour {
         }
     }
     
+    public void ShakePoop ()
+    {
+        this.GetComponentInChildren<Animator>().SetTrigger("Shake");
+    }
+
     public float GetFillRate()
     {
         return fillAddition;

@@ -7,11 +7,14 @@ using System.Collections;
 public class TeamArea : MonoBehaviour {
 
 	[SerializeField] Image fillBar;
-
+    [SerializeField] bool isTeam1;
     float fillRate = 0;
+    GameManager gameManager;
 
     void Start ()
     {
+        gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
+
         if(fillBar)
         {
             fillBar.fillAmount = 0;
@@ -22,12 +25,14 @@ public class TeamArea : MonoBehaviour {
     {
         if (fillBar.fillAmount < 1)
         {
-            fillBar.fillAmount += fillRate;
+            if (gameManager.isGameRunning) {
 
-            if(fillBar.fillAmount == 1)
-            {
-                // TODO: End Game
-                Debug.Log("Game ended!");
+                fillBar.fillAmount += fillRate;
+
+                if (fillBar.fillAmount >= 1)
+                {
+                    gameManager.SetWinner(isTeam1);
+                }
             }
         }
     }

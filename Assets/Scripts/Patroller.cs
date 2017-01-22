@@ -7,6 +7,14 @@ public class Patroller : MonoBehaviour {
 	public GameObject Target;
 	public bool b_hasTarget;
 
+	//rot stuff
+
+
+	[SerializeField]public float angle;
+	[SerializeField]public float period = 1f;
+	[SerializeField]public float _Time = 10;
+
+
 	[SerializeField] private float m_moveSpeed;
 	[SerializeField] private float m_rotSpeed;
 	private Quaternion m_destRot;
@@ -20,8 +28,13 @@ public class Patroller : MonoBehaviour {
 	public Transform[] waypoints;
 	public int currentWaypoint = 0;
 
+
+	public GameObject rotator;
+
 	// Use this for initialization
 	void Start () {
+		this.transform.position = waypoints [waypoints.Length-1].position;
+		this.transform.rotation.SetLookRotation (waypoints [0].position, -Vector3.up);
 	}
 	
 	// Update is called once per frame
@@ -55,6 +68,10 @@ public class Patroller : MonoBehaviour {
 
 	private void Detect()
 	{
+		_Time =  Time.time;
+		float phase = Mathf.Sin (_Time / period);
+		rotator.transform.localRotation = Quaternion.Euler (new Vector3 (0, 0, phase * angle));
+
 
 	}
 
